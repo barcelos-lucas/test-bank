@@ -1,9 +1,8 @@
 package com.banco.case_contas.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.persistence.Version;
+
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -29,13 +28,16 @@ public class Account {
     private BigDecimal balance;
     private String accountType;
 
+    @Version
+    private Long version; //otimista
+
     public Account(String owner, String accountType) {
         this.owner = owner;
         this.accountType = accountType;
         this.balance = BigDecimal.ZERO;
     }
 
-    private Long version; //otimista
+
 
     public void credit(BigDecimal amount) {
         this.balance = this.balance.add(amount);
