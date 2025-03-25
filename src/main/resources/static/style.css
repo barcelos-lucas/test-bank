@@ -1,78 +1,105 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f2f4f8;
+    font-family: Arial, sans-serif;
+    background-color: #f2f4f8;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 80px auto;
-    background: #ffffff;
+    background-color: #fff;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    text-align: center;
-    color: #333333;
-    margin-bottom: 30px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
+h2, h3 {
+    text-align: left;
+    margin-top: 0;
 }
 
 label {
-    margin-bottom: 6px;
-    color: #555;
-    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 18px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    margin-bottom: 20px;
+    box-sizing: border-box;
     font-size: 14px;
 }
 
-input[type="submit"],
 button {
-    background-color: #4a90e2;
-    color: white;
-    border: none;
+    width: 100%;
     padding: 12px;
-    border-radius: 6px;
+    background: #4a90e2;
+    border: none;
+    color: white;
     font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-input[type="submit"]:hover,
 button:hover {
-    background-color: #357bd8;
+    background: #357bd8;
 }
 
 a {
     display: block;
-    margin-top: 10px;
     text-align: center;
+    margin-top: 16px;
     color: #4a90e2;
     text-decoration: none;
-    font-size: 14px;
+    font-weight: bold;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-.message {
-    margin-top: 20px;
+.btn-link {
+    display: block;
+    background-color: #4a90e2;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
     text-align: center;
-    color: green;
-    font-weight: 500;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.btn-link:hover {
+    background-color: #357bd8;
+    text-decoration: none;
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.message.error {
+    background-color: #ffe5e5;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+}
+
+.message.success {
+    background-color: #e6ffea;
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
 }
