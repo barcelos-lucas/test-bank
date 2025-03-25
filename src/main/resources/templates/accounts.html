@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Contas</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Contas do Sistema</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Saldo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.id}"></td>
+            <td th:text="${account.accountType}"></td>
+            <td th:text="${account.balance} + ' R$'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <p><a href="/accounts/dashboard">← Voltar para o Dashboard</a></p>
+</div>
+</body>
+</html>
