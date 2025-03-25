@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Conta</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Criar Nova Conta</h2>
+    <form th:action="@{/accounts/createAccount}" method="post" th:object="${account}">
+        <label for="accountType">Tipo de Conta:</label>
+        <select id="accountType" name="accountType" th:field="*{accountType}" required>
+            <option value="corrente">Corrente</option>
+            <option value="poupanca">Poupança</option>
+        </select>
+
+        <button type="submit">Criar Conta</button>
+    </form>
+    <a class="btn-link" th:href="@{/accounts/dashboard}">← Voltar</a>
+</div>
+</body>
+</html>
