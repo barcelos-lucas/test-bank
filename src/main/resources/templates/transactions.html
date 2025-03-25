@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movimentações bancárias</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>Operações</h2>
+
+    <!--crédito-->
+    <h3>Crédito</h3>
+    <form th:action="@{/credit}" method="post" th:object="${transaction}">
+        <label for="accountId">ID da Conta:</label>
+        <input type="text" id="accountId" th:field="*{accountId}" required>
+        <label for="amount">Valor:</label>
+        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+        <button type="submit">Creditar</button>
+    </form>
+
+    <!--debito-->
+    <h3>Débito</h3>
+    <form th:action="@{/debit}" method="post" th:object="${transaction}">
+        <label for="accountId">ID da Conta:</label>
+        <input type="text" id="accountId" th:field="*{accountId}" required>
+        <label for="amount">Valor:</label>
+        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+        <button type="submit">Debitar</button>
+    </form>
+
+    <!--transferencias-->
+    <form th:action="@{/transfer}" method="post" th:object="${transaction}">
+        <label for="fromAccountId">Conta de Origem:</label>
+        <input type="text" id="fromAccountId" th:field="*{fromAccountId}" required>
+        <label for="toAccountId">Conta de Destino:</label>
+        <input type="text" id="toAccountId" th:field="*{toAccountId}" required>
+        <label for="amount">Valor:</label>
+        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+        <button type="submit">Transferir</button>
+    </form>
+
+    <a href="/accounts">← Voltar para lista de contas</a>
+</div>
+</body>
+</html>
