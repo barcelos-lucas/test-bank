@@ -34,4 +34,10 @@ public class AccountRepositoryImpl implements AccountRepository {
     public List<Account> findAll() {
         return jpaRepository.findAll();
     }
+
+    @Override
+    public List<Account> findByOwner(String ownerId) {
+        return jpaRepository.findByOwner(ownerId);
+    }
+
 }
