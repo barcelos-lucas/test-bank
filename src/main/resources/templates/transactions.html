@@ -2,45 +2,105 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Movimentações bancárias</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Transações</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<div class="container">
+<!-- erro -->
+<div th:if="${errorMessage}" class="popup-message error show">
+    <span th:text="${errorMessage}"></span>
+</div>
+
+<!-- sucesso -->
+<div th:if="${successMessage}" class="popup-message success show">
+    <span th:text="${successMessage}"></span>
+</div>
+
+
+<script>
+    setTimeout(() => {
+        const popup = document.querySelector('.popup-message');
+        if (popup) {
+            popup.style.opacity = '0';
+            popup.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => popup.remove(), 500);
+        }
+    }, 4000);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const forms = document.querySelectorAll(".transaction-form");
+
+        forms.forEach(form => {
+            form.addEventListener("submit", function (event) {
+                const input = form.querySelector("input[name='amount']");
+                const value = parseFloat(input.value);
+
+                if (isNaN(value) || value <= 0) {
+                    event.preventDefault();
+                    showPopup("Coloque um valor maior que zero.");
+                }
+            });
+        });
+
+        function showPopup(message) {
+            const popup = document.createElement("div");
+            popup.className = "popup";
+            popup.textContent = message;
+            document.body.appendChild(popup);
+
+            setTimeout(() => {
+                popup.remove();
+            }, 3000);
+        }
+    });
+</script>
+
+
+<div class="transaction-page">
     <h2>Operações</h2>
 
-    <!--crédito-->
+    <!-- Crédito -->
     <h3>Crédito</h3>
-    <form th:action="@{/credit}" method="post" th:object="${transaction}">
-        <label for="accountId">ID da Conta:</label>
-        <input type="text" id="accountId" th:field="*{accountId}" required>
-        <label for="amount">Valor:</label>
-        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+    <form th:action="@{/accounts/credit}" method="post" th:object="${transaction}">
+        <label for="creditAccountId">ID da Conta:</label>
+        <input type="text" id="creditAccountId" th:field="*{accountId}" required>
+
+        <label for="creditAmount">Valor:</label>
+        <input type="number" step="0.01" id="creditAmount" th:field="*{amount}" required>
+
         <button type="submit">Creditar</button>
     </form>
 
-    <!--debito-->
+    <!-- Débito -->
     <h3>Débito</h3>
-    <form th:action="@{/debit}" method="post" th:object="${transaction}">
-        <label for="accountId">ID da Conta:</label>
-        <input type="text" id="accountId" th:field="*{accountId}" required>
-        <label for="amount">Valor:</label>
-        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+    <form th:action="@{/accounts/debit}" method="post" th:object="${transaction}">
+        <label for="debitAccountId">ID da Conta:</label>
+        <input type="text" id="debitAccountId" th:field="*{accountId}" required>
+
+        <label for="debitAmount">Valor:</label>
+        <input type="number" step="0.01" id="debitAmount" th:field="*{amount}" required>
+
         <button type="submit">Debitar</button>
     </form>
 
-    <!--transferencias-->
-    <form th:action="@{/transfer}" method="post" th:object="${transaction}">
+    <!-- Transferência -->
+    <h3>Transferência</h3>
+    <form th:action="@{/accounts/transfer}" method="post" th:object="${transaction}">
         <label for="fromAccountId">Conta de Origem:</label>
         <input type="text" id="fromAccountId" th:field="*{fromAccountId}" required>
+
         <label for="toAccountId">Conta de Destino:</label>
         <input type="text" id="toAccountId" th:field="*{toAccountId}" required>
-        <label for="amount">Valor:</label>
-        <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+
+        <label for="transferAmount">Valor:</label>
+        <input type="number" step="0.01" id="transferAmount" th:field="*{amount}" required>
+
         <button type="submit">Transferir</button>
     </form>
 
-    <a href="/accounts">← Voltar para lista de contas</a>
+    <p><a href="/accounts/dashboard">← Voltar</a></p>
 </div>
 </body>
 </html>

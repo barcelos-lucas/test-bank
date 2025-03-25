@@ -1,17 +1,24 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f4f8;
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f6fc;
 }
 
 .container {
     max-width: 500px;
     margin: 80px auto;
-    background-color: #fff;
+    background-color: white;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+h1 {
+    font-size: 1.6rem;
+    color: #1a1a1a;
+    margin-bottom: 20px;
 }
 
 h2, h3 {
@@ -67,6 +74,17 @@ a:hover {
     text-decoration: underline;
 }
 
+
+.form-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
 .btn-link {
     display: block;
     background-color: #4a90e2;
@@ -102,4 +120,300 @@ a:hover {
     background-color: #e6ffea;
     color: #2e7d32;
     border: 1px solid #2e7d32;
+}
+
+.dashboard-button, .dashboard-link {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #3f8efc;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-link {
+    background-color: transparent;
+    color: #3f8efc;
+    text-decoration: underline;
+    padding: 0;
+    font-weight: bold;
+}
+
+.dashboard-button:hover {
+    background-color: #2e6fd8;
+}
+
+.dashboard-link:hover {
+    color: #2e6fd8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background-color: #f0f4f8;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f9fbff;
+}
+
+/* PAGINA DE DASH */
+.dashboard-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.dashboard-page .container {
+    width: 90%;
+    max-width: 800px;
+}
+
+.dashboard-page .form-box {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-page .form-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.dashboard-page .form-box h3 {
+    margin: 30px 0 15px;
+    color: #444;
+}
+
+.dashboard-page .dashboard-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.dashboard-page .dashboard-button:hover {
+    background-color: #0b5ed7;
+}
+
+.dashboard-page .dashboard-link {
+    display: inline-block;
+    margin: 10px;
+    color: #0d6efd;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.dashboard-page .dashboard-link:hover {
+    color: #0a58ca;
+}
+
+.dashboard-page .styled-table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 15px;
+}
+
+.dashboard-page .styled-table thead tr {
+    background-color: #0d6efd;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.dashboard-page .styled-table th,
+.dashboard-page .styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dashboard-page .styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+@media (max-width: 600px) {
+    .dashboard-page .form-box {
+        padding: 20px;
+    }
+
+    .dashboard-page .styled-table th,
+    .dashboard-page .styled-table td {
+        padding: 10px;
+    }
+
+    .dashboard-page .dashboard-button,
+    .dashboard-page .dashboard-link {
+        width: 100%;
+        display: block;
+        margin: 10px 0;
+    }
+}
+
+
+/* PAGINA DE TRANSAÇÃO */
+.transaction-page {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.transaction-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.transaction-page h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #444;
+    border-left: 4px solid #2b78e4;
+    padding-left: 10px;
+}
+
+.transaction-page form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.transaction-page label {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.transaction-page input[type="text"],
+.transaction-page input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.transaction-page input[type="text"]:focus,
+.transaction-page input[type="number"]:focus {
+    border-color: #2b78e4;
+    outline: none;
+}
+
+.transaction-page button {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #2b78e4, #1c5db2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: fit-content;
+}
+
+.transaction-page button:hover {
+    background: linear-gradient(90deg, #1c5db2, #2b78e4);
+}
+
+.transaction-page a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #2b78e4;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.transaction-page a:hover {
+    color: #174a91;
+}
+
+.popup-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-weight: 500;
+    animation: fadeSlideDown 0.5s ease-in-out;
+}
+
+.popup-message.success {
+    background-color: #28a745; /* verde */
+}
+
+.popup-message.error {
+    background-color: #ff4d4d; /* vermelho */
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* popup do JS */
+.popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #f44336;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); }
 }
