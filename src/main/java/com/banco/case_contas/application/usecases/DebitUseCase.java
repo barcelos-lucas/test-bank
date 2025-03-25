@@ -21,14 +21,19 @@ public class DebitUseCase {
 
     @Transactional
     public void execute(UUID accountId, BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero");
+        }
+
         Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + accountId));
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
 
         if (account.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Saldo insuficiente para débito.");
+            throw new IllegalArgumentException("Saldo insuficiente para débito");
         }
 
         account.setBalance(account.getBalance().subtract(amount));
         accountRepository.save(account);
     }
+
 }

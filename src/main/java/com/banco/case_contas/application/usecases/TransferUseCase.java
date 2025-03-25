@@ -3,7 +3,6 @@ package com.banco.case_contas.application.usecases;
 import com.banco.case_contas.domain.model.Account;
 import com.banco.case_contas.domain.repository.AccountRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,7 +13,6 @@ public class TransferUseCase {
 
     private final AccountRepository accountRepository;
 
-    @Autowired
     public TransferUseCase(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
@@ -22,17 +20,21 @@ public class TransferUseCase {
     @Transactional
     public void execute(UUID fromAccountId, UUID toAccountId, BigDecimal amount) {
         if (fromAccountId.equals(toAccountId)) {
-            throw new IllegalArgumentException("Conta de origem e destino não podem ser a mesma.");
+            throw new IllegalArgumentException("A conta de origem e destino devem ser diferentes");
+        }
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor de transferência deve ser acima de zero");
         }
 
         Account from = accountRepository.findById(fromAccountId)
-                .orElseThrow(() -> new IllegalArgumentException("Conta de origem não encontrada: " + fromAccountId));
+                .orElseThrow(() -> new IllegalArgumentException("Conta de origem não encontrada"));
 
         Account to = accountRepository.findById(toAccountId)
-                .orElseThrow(() -> new IllegalArgumentException("Conta de destino não encontrada: " + toAccountId));
+                .orElseThrow(() -> new IllegalArgumentException("Conta de destino não encontrada"));
 
         if (from.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Saldo insuficiente para transferência.");
+            throw new IllegalArgumentException("Saldo insuficiente para transferência");
         }
 
         from.setBalance(from.getBalance().subtract(amount));
