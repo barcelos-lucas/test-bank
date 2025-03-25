@@ -1,5 +1,6 @@
 package com.banco.case_contas.presentation.web;
 
+import com.banco.case_contas.application.usecases.CreateAccountRequest;
 import com.banco.case_contas.application.usecases.CreateAccountUseCase;
 import com.banco.case_contas.domain.model.Account;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Account> createAccount (@RequestBody createAccountRequest createAccountRequest) {
+    public ResponseEntity<Account> createAccount (@RequestBody CreateAccountRequest request) {
         Account created = createAccountUseCase.execute(request);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
