@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
-
+import java.util.List;
 
 @Repository
 public class AccountRepositoryImpl implements AccountRepository {
@@ -29,5 +29,9 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public boolean existsById(UUID id) {
         return jpaRepository.existsById(id);
+    }
+    @Override
+    public List<Account> findAll() {
+        return jpaRepository.findAll();
     }
 }
