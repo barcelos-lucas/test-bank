@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h2>Bem-vindo ao Dashboard</h2>
+
+        <p th:text="'Olá, ' + ${#authentication.name} + '!'"></p>
+
+        <div th:if="${#lists.isEmpty(accounts)}" class="no-data">
+            <p>Você ainda não possui nenhuma conta vinculada.</p>
+            <p><a href="/accounts">Criar nova conta</a></p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(accounts)}">
+            <h3>Minhas Contas</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Saldo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.id}"></td>
+                    <td th:text="${account.accountType}"></td>
+                    <td th:text="${account.balance} + ' R$'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="actions">
+            <a href="/transactions" class="button">Fazer Transações</a>
+            <a href="/logout" class="button danger">Sair</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
