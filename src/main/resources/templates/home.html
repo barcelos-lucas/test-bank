@@ -7,12 +7,15 @@
 </head>
 <body>
 <div class="container">
-    <h2>Bem-vindo à Home</h2>
-    <p>Olá, <span th:text="${#authentication.name}">usuário</span>!</p>
+    <div class="card">
+        <h2>Bem-vindo à Home</h2>
+        <p th:text="'Olá, ' + ${#authentication.name} + '!'"></p>
 
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">Sair</button>
-    </form>
+        <div class="actions">
+            <a href="/accounts/dashboard" class="btn-link">Dashboard</a>
+            <a href="/logout" class="btn-link">Sair</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>
