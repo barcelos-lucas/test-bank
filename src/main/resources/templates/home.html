@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Bem-vindo à Home</h2>
+    <p>Olá, <span th:text="${#authentication.name}">usuário</span>!</p>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Sair</button>
+    </form>
+</div>
+</body>
+</html>
