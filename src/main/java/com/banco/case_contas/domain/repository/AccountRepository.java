@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface AccountRepository {
     Account save(Account account);
-    Optional<Account> searchByID(UUID id);
-    boolean existsByID(UUID id);
+    Optional<Account> findById(UUID id);
+    boolean existsById(UUID id);
 }
