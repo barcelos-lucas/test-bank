@@ -35,6 +35,8 @@ public class Account {
         this.balance = BigDecimal.ZERO;
     }
 
+    private Long version; //otimista
+
     public void credit(BigDecimal amount) {
         this.balance = this.balance.add(amount);
     }
