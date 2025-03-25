@@ -1,9 +1,12 @@
 package com.banco.case_contas.infrastructure.persistence;
 
+import com.banco.case_contas.domain.model.Account;
 import com.banco.case_contas.domain.repository.AccountRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
+
 
 @Repository
 public class AccountRepositoryImpl implements AccountRepository {
@@ -19,12 +22,12 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Optional<Account> findByID (UUID id) {
-        return jpaRepository.findByID(id);
+    public Optional<Account> findById(UUID id) {
+        return jpaRepository.findById(id);
     }
 
     @Override
-    public boolean existsById (UUID id){
-        return jpaRepository.existsByID(id);
+    public boolean existsById(UUID id) {
+        return jpaRepository.existsById(id);
     }
 }
