@@ -1,28 +1,73 @@
 package com.banco.case_contas.presentation.web;
 
-import com.banco.case_contas.application.usecases.CreateAccountRequest;
-import com.banco.case_contas.application.usecases.CreateAccountUseCase;
+import com.banco.case_contas.application.usecases.CreditUseCase;
+import com.banco.case_contas.application.usecases.DebitUseCase;
+import com.banco.case_contas.application.usecases.TransferUseCase;
 import com.banco.case_contas.domain.model.Account;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.banco.case_contas.domain.TransactionDTO;
+import com.banco.case_contas.domain.repository.AccountRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+import java.util.UUID;
+
+@Controller
 @RequestMapping("/accounts")
-
 public class AccountController {
-    private final CreateAccountUseCase createAccountUseCase;
 
-    public AccountController(final CreateAccountUseCase createAccountUseCase) {
-        this.createAccountUseCase = createAccountUseCase;
+    private final AccountRepository accountRepository;
+    private final CreditUseCase creditUseCase;
+    private final DebitUseCase debitUseCase;
+    private final TransferUseCase transferUseCase;
+
+    public AccountController(AccountRepository accountRepository,
+                             CreditUseCase creditUseCase,
+                             DebitUseCase debitUseCase,
+                             TransferUseCase transferUseCase) {
+        this.accountRepository = accountRepository;
+        this.creditUseCase = creditUseCase;
+        this.debitUseCase = debitUseCase;
+        this.transferUseCase = transferUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<Account> createAccount (@RequestBody CreateAccountRequest request) {
-        Account created = createAccountUseCase.execute(request);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    // Página com lista de contas
+    @GetMapping
+    public String listAccounts(Model model) {
+        List<Account> accounts = accountRepository.findAll();
+        model.addAttribute("accounts", accounts);
+        return "accounts";
+    }
+
+    // Página de movimentações
+    @GetMapping("/transactions")
+    public String showTransactionsPage(Model model) {
+        model.addAttribute("transaction", new TransactionDTO());
+        return "transactions";
+    }
+
+    // Operação de crédito
+    @PostMapping("/credit")
+    public String credit(@ModelAttribute TransactionDTO dto) {
+        creditUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
+        return "redirect:/accounts";
+    }
+
+    // Operação de débito
+    @PostMapping("/debit")
+    public String debit(@ModelAttribute TransactionDTO dto) {
+        debitUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
+        return "redirect:/accounts";
+    }
+
+    @PostMapping("/transfer")
+    public String transfer(@ModelAttribute TransactionDTO dto) {
+        transferUseCase.execute(
+                UUID.fromString(dto.getFromAccountId()),
+                UUID.fromString(dto.getToAccountId()),
+                dto.getAmount()
+        );
+        return "redirect:/accounts";
     }
 }
