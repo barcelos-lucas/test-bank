@@ -11,5 +11,6 @@ public interface AccountRepository {
     Optional<Account> findById(UUID id);
     boolean existsById(UUID id);
     List<Account> findAll();
+    List<Account> findByOwner(String ownerId);
 
 }
