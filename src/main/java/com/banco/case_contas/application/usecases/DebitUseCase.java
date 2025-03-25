@@ -25,7 +25,7 @@ public class DebitUseCase {
             throw new IllegalArgumentException("O valor deve ser maior que zero");
         }
 
-        Account account = accountRepository.findById(accountId)
+        Account account = accountRepository.findByIdForUpdate(accountId) //altera para update para o bloqueio pessimista
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
 
         if (account.getBalance().compareTo(amount) < 0) {

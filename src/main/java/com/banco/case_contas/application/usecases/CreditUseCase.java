@@ -23,7 +23,7 @@ public class CreditUseCase {
             throw new IllegalArgumentException("O valor deve ser maior que zero");
         }
 
-        Account account = accountRepository.findById(accountId)
+        Account account = accountRepository.findByIdForUpdate(accountId) //altera para update para o bloqueio pessimista
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
 
         account.setBalance(account.getBalance().add(amount));

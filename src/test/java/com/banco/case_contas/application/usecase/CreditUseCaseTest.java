@@ -25,8 +25,12 @@ class CreditUseCaseTest {
         repository = mock(AccountRepository.class);
         useCase = new CreditUseCase(repository);
         accountId = UUID.randomUUID();
-        account = new Account(accountId, "John", BigDecimal.valueOf(100), "CORRENTE");
+
+        account = new Account("John", "CORRENTE");
+        account.setId(accountId);
+        account.setBalance(BigDecimal.valueOf(100));
     }
+
 
     @Test
     void shouldCreditAmountSuccessfully() {

@@ -29,9 +29,15 @@ class TransferUseCaseTest {
         sourceId = UUID.randomUUID();
         targetId = UUID.randomUUID();
 
-        source = new Account(sourceId, "Source", BigDecimal.valueOf(100), "CORRENTE");
-        target = new Account(targetId, "Target", BigDecimal.valueOf(50), "CORRENTE");
+        source = new Account("Source", "CORRENTE");
+        source.setId(sourceId);
+        source.setBalance(BigDecimal.valueOf(100));
+
+        target = new Account("Target", "CORRENTE");
+        target.setId(targetId);
+        target.setBalance(BigDecimal.valueOf(50));
     }
+
 
     @Test
     void shouldTransferSuccessfully() {

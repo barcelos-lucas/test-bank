@@ -25,8 +25,12 @@ class DebitUseCaseTest {
         repository = mock(AccountRepository.class);
         useCase = new DebitUseCase(repository);
         accountId = UUID.randomUUID();
-        account = new Account(accountId, "John", BigDecimal.valueOf(100), "CORRENTE");
+
+        account = new Account("Maria", "POUPANCA");
+        account.setId(accountId);
+        account.setBalance(BigDecimal.valueOf(200));
     }
+
 
     @Test
     void shouldDebitAmountSuccessfully() {

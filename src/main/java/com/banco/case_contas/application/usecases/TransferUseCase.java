@@ -27,10 +27,10 @@ public class TransferUseCase {
             throw new IllegalArgumentException("Valor de transferência deve ser acima de zero");
         }
 
-        Account from = accountRepository.findById(fromAccountId)
+        Account from = accountRepository.findByIdForUpdate(fromAccountId) //altera para update para o bloqueio pessimista
                 .orElseThrow(() -> new IllegalArgumentException("Conta de origem não encontrada"));
 
-        Account to = accountRepository.findById(toAccountId)
+        Account to = accountRepository.findByIdForUpdate(toAccountId) //altera para update para o bloqueio pessimista
                 .orElseThrow(() -> new IllegalArgumentException("Conta de destino não encontrada"));
 
         if (from.getBalance().compareTo(amount) < 0) {
