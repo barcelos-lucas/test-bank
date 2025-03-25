@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,7 +45,17 @@ public class AccountController {
     // Página com lista de contas
     @GetMapping
     public String listAccounts(Model model) {
-        List<Account> accounts = accountRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        User user = userOpt.get();
+        List<Account> accounts = accountRepository.findByOwner(user.getId());
+
         model.addAttribute("accounts", accounts);
         return "accounts";
     }
@@ -54,30 +66,47 @@ public class AccountController {
         model.addAttribute("transaction", new TransactionDTO());
         return "transactions";
     }
-
-    // Operação de crédito
+    // operação de credito
     @PostMapping("/credit")
-    public String credit(@ModelAttribute TransactionDTO dto) {
-        creditUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
-        return "redirect:/accounts";
+    public String credit(@ModelAttribute TransactionDTO dto, RedirectAttributes redirectAttributes) {
+        try {
+            creditUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
+            redirectAttributes.addFlashAttribute("successMessage", "Crédito realizado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/accounts/transactions";
+    }
+    // operação de debito
+    @PostMapping("/debit")
+    public String debit(@ModelAttribute TransactionDTO dto, RedirectAttributes redirectAttributes) {
+        try {
+            debitUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
+            redirectAttributes.addFlashAttribute("successMessage", "Débito realizado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/accounts/transactions";
     }
 
-    // Operação de débito
-    @PostMapping("/debit")
-    public String debit(@ModelAttribute TransactionDTO dto) {
-        debitUseCase.execute(UUID.fromString(dto.getAccountId()), dto.getAmount());
-        return "redirect:/accounts";
-    }
+
     // Operação de transferencia
     @PostMapping("/transfer")
-    public String transfer(@ModelAttribute TransactionDTO dto) {
-        transferUseCase.execute(
-                UUID.fromString(dto.getFromAccountId()),
-                UUID.fromString(dto.getToAccountId()),
-                dto.getAmount()
-        );
-        return "redirect:/accounts";
+    public String transfer(@ModelAttribute TransactionDTO dto, Model model) {
+        try {
+            transferUseCase.execute(
+                    UUID.fromString(dto.getFromAccountId()),
+                    UUID.fromString(dto.getToAccountId()),
+                    dto.getAmount()
+            );
+            return "redirect:/accounts/dashboard";
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("transaction", dto);
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "transactions";
+        }
     }
+
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -94,6 +123,33 @@ public class AccountController {
         model.addAttribute("accounts", accounts);
         return "dashboard";
     }
+
+    // formulário para criar conta
+    @GetMapping("/createAccount")
+    public String showCreateAccountForm(Model model) {
+        model.addAttribute("account", new Account());
+        return "createAccount";
+    }
+
+    // processa o envio do formulário
+    @PostMapping("/createAccount")
+    public String createAccount(@ModelAttribute Account account) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        User user = userOpt.get();
+        account.setOwner(user.getId());
+        account.setBalance(BigDecimal.ZERO); // ponto zero do saldo
+        accountRepository.save(account);
+
+        return "redirect:/accounts/dashboard";
+    }
+
 
 }
 
